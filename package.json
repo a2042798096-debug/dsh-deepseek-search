@@ -1,6 +1,6 @@
 {
   "name": "dsh-deepseek-search",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "DeepSeek 搜索：多引擎网页搜索、正文抓取与深度资料收集插件（DeepSeek Harness）",
   "type": "module",
   "main": "lib/index.mjs",
@@ -14,6 +14,7 @@
     "cordis.patch.yml",
     "config.example.json",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE"
   ],
   "dsh": {
