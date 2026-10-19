@@ -6,6 +6,9 @@
 - id: web
   config:
     searchProvider: deepseek-search
+    # 补丁层的 config 会替换而不是合并 web 的配置，必须把原来的 fetch provider 一起写回，
+    # 否则 deepseek-fetch-api 与 http 同时可用会导致 web_fetch 报“multiple usable web providers”。
+    fetchProvider: http
 
 - insert:
     - id: deepseek-search

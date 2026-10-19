@@ -185,7 +185,7 @@ C:\Users\<你的用户名>\.dsh\deepseek-search\config.json
 1. **搜索层**：并行请求已启用的引擎，解析各自 HTML/JSON；单引擎失败只记警告，不影响其他引擎。
 2. **合并层**：按 URL 去重，用加权 Reciprocal Rank Fusion 排序；多个引擎共同命中会加分。
 3. **跳转解析**：搜狗/360/百度的 `/link` 跳转壳会被解析成真实域名，解析失败的结果丢弃。
-4. **抓取层**：通过 DSH 的 `ctx.web.fetch()` 读取页面，复用其 SSRF 防护、DNS 校验、连接固定、重定向和大小限制。
+4. **抓取层**：通过 DSH 的 `ctx.web.fetch()` 读取页面，复用其 SSRF 防护、DNS 校验、连接固定、重定向和大小限制。插件 bundle 补丁会同时固定 `web.searchProvider: deepseek-search` 和 `web.fetchProvider: http`；因为补丁层的 `config` 是替换而不是深合并，漏掉 `fetchProvider` 会让 `deepseek-fetch-api` 与 `http` 同时可用并报歧义。
 5. **正文层**：轻量 HTML 解析，优先 `article` / `main` / 公众号 `#js_content` / CSDN `#content_views` / 知乎 `RichText` / GitHub `markdown-body`，按文本长度和链接密度选最佳容器。
 6. **汇总层**：按域名分散选页（同域最多 2 页），并发抓取，输出标题、URL、来源引擎、时间、摘要和正文。
 
@@ -234,6 +234,7 @@ C:\Users\<你的用户名>\.dsh\deepseek-search\config.json
 - 公众号、知乎、CSDN 等可能有反爬；`web_fetch` 失败时换用文章镜像或搜索结果里的其他来源。
 - PDF、压缩包、音视频会明确提示不支持。
 - 需要代理才能访问的站点，DSH 的 fetch 会按它的代理配置处理；搜索引擎请求走本插件的直连 fetch，可能不走同一个代理。
+- 如果错误是 `multiple usable web providers are registered (deepseek-fetch-api, http)`，说明 `web` 的 `fetchProvider` 没有被固定。请确认插件自带的 `cordis.patch.yml` 同时包含 `searchProvider: deepseek-search` 和 `fetchProvider: http`；旧版本可在 profile 的 `cordis.patch.yml` 里补上，然后重载/重启。
 
 ### 超时
 
