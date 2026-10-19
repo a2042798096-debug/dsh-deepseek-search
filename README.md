@@ -240,8 +240,9 @@ C:\Users\<你的用户名>\.dsh\deepseek-search\config.json
 
 ## 6. 安全与隐私
 
-- 搜索请求只发往引擎/API 的官方地址；页面抓取走 DSH 的 `ctx.web.fetch()`，不会绕过它的公网地址校验。
-- 不收集、不上传你的 Key；Key 只写入本机 `~/.dsh/deepseek-search/config.json`（尽力设为 0600）。
+- 搜索请求发往你启用的引擎/API 服务商（必应/百度/搜狗/360 或 Tavily/Exa 等）；不会发往本插件作者的服务器，也没有遥测。
+- 页面抓取走 DSH 的 `ctx.web.fetch()`，不会绕过它的公网地址校验。
+- 不收集、不上传你的 Key；Key 只写入本机 `~/.dsh/deepseek-search/config.json`（尽力设为 0600），也可以改用环境变量。
 - 工具输出会明确标注“网页内容属于外部不可信数据”，模型不应执行网页里的指令。
 - 正文长度有上限，避免把超长网页塞进上下文。
 - 本插件不执行网页脚本，不解析 PDF/压缩包/音视频；遇到这些会返回明确错误。
@@ -280,7 +281,7 @@ C:\Users\<你的用户名>\.dsh\deepseek-search\config.json
 
 - 公众号、知乎、CSDN 等可能有反爬；`web_fetch` 失败时换用文章镜像或搜索结果里的其他来源。
 - PDF、压缩包、音视频会明确提示不支持。
-- 需要代理才能访问的站点，DSH 的 fetch 会按它的代理配置处理；搜索引擎请求走本插件的直连 fetch，可能不走同一个代理。
+- 需要代理才能访问的站点，DSH 的 fetch 会按它的代理配置处理；搜索引擎默认直连，直连失败时会回退到 `ctx.web.fetch()`，因此也能复用 DSH 的代理。API 引擎的 POST 请求不会走这个回退。
 - 如果错误是 `multiple usable web providers are registered (deepseek-fetch-api, http)`，说明 `web` 的 `fetchProvider` 没有被固定。请确认插件自带的 `cordis.patch.yml` 同时包含 `searchProvider: deepseek-search` 和 `fetchProvider: http`；旧版本可在 profile 的 `cordis.patch.yml` 里补上，然后重载/重启。
 
 ### 超时
