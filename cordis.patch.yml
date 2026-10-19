@@ -1,0 +1,12 @@
+# DeepSeek 搜索插件对 desktop profile 的补丁层。
+#
+# 1) 把原生 web_search 的搜索提供方切换到本插件：多引擎聚合 + RRF 合并。
+#    卸载插件后这一层随之消失，web 会回退到内置的 deepseek-official。
+# 2) 注册插件本体（搜索提供方、web_research / web_collect / web_engines 工具、设置页）。
+- id: web
+  config:
+    searchProvider: deepseek-search
+
+- insert:
+    - id: deepseek-search
+      name: dsh-deepseek-search

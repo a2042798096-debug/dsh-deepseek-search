@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "engines": {
+    "bing": { "enabled": true, "baseURL": "https://cn.bing.com", "weight": 1 },
+    "baidu": { "enabled": true, "weight": 0.95 },
+    "sogou": { "enabled": true, "weight": 0.85 },
+    "so360": { "enabled": true, "weight": 0.8 },
+    "duckduckgo": { "enabled": false, "weight": 0.9 },
+    "searxng": { "enabled": false, "baseURL": "", "weight": 0.9 },
+    "tavily": { "enabled": false, "apiKey": "", "weight": 1.1 },
+    "exa": { "enabled": false, "apiKey": "", "weight": 1.05 },
+    "firecrawl": { "enabled": false, "apiKey": "", "weight": 1 },
+    "brave": { "enabled": false, "apiKey": "", "weight": 1 },
+    "serper": { "enabled": false, "apiKey": "", "weight": 1.05 }
+  },
+  "search": {
+    "resultsPerEngine": 10,
+    "engineTimeoutMs": 15000,
+    "totalTimeoutMs": 30000,
+    "maxEnginesPerQuery": 6,
+    "cacheTtlMs": 180000
+  },
+  "fetch": {
+    "maxCharsPerPage": 12000,
+    "researchMaxPages": 6,
+    "concurrency": 3,
+    "readerBaseURL": ""
+  },
+  "ui": {
+    "language": "zh"
+  }
+}
